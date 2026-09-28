@@ -1,0 +1,181 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: videos
+    description: Prompt-driven video generation
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /videos:
+    get:
+      operationId: listVideos
+      tags: [videos]
+      summary: List generated videos
+      responses:
+        "200":
+          description: Generated video projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VideoProject"
+  /videos/generate:
+    post:
+      operationId: generateVideo
+      tags: [videos]
+      summary: Create a 15-second video project from a prompt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VideoGenerateInput"
+      responses:
+        "201":
+          description: Video project storyboard
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoProject"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /videos/{id}:
+    get:
+      operationId: getVideo
+      tags: [videos]
+      summary: Get a generated video project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Video project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoProject"
+        "404":
+          description: Video project not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    VideoGenerateInput:
+      type: object
+      properties:
+        prompt:
+          type: string
+          minLength: 8
+          maxLength: 500
+        aspectRatio:
+          type: string
+          enum: [16:9, 9:16, 1:1]
+        style:
+          type: string
+          enum: [cinematic, editorial, dreamlike, kinetic]
+      required:
+        - prompt
+    VideoScene:
+      type: object
+      properties:
+        id:
+          type: string
+        start:
+          type: number
+        end:
+          type: number
+        title:
+          type: string
+        caption:
+          type: string
+        visual:
+          type: string
+        accent:
+          type: string
+      required:
+        - id
+        - start
+        - end
+        - title
+        - caption
+        - visual
+        - accent
+    VideoProject:
+      type: object
+      properties:
+        id:
+          type: string
+        prompt:
+          type: string
+        title:
+          type: string
+        aspectRatio:
+          type: string
+        style:
+          type: string
+        duration:
+          type: number
+        createdAt:
+          type: string
+        status:
+          type: string
+          enum: [ready]
+        scenes:
+          type: array
+          items:
+            $ref: "#/components/schemas/VideoScene"
+      required:
+        - id
+        - prompt
+        - title
+        - aspectRatio
+        - style
+        - duration
+        - createdAt
+        - status
+        - scenes
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+

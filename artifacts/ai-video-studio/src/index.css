@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=DM+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --background: 42 35% 93%;
+  --foreground: 224 31% 15%;
+  --border: 40 19% 82%;
+  --input: 40 19% 82%;
+  --ring: 37 91% 57%;
+  --card: 45 38% 97%;
+  --card-foreground: 224 31% 15%;
+  --primary: 222 44% 20%;
+  --primary-foreground: 42 35% 93%;
+  --secondary: 38 25% 88%;
+  --secondary-foreground: 224 31% 15%;
+  --muted: 40 22% 88%;
+  --muted-foreground: 221 14% 43%;
+  --accent: 37 91% 57%;
+  --accent-foreground: 224 31% 15%;
+  --app-font-sans: 'Bricolage Grotesque', ui-sans-serif, sans-serif;
+  --app-font-mono: 'DM Mono', ui-monospace, monospace;
+  --radius: 0.8rem;
+  --sidebar-ink: #17213b;
+  --sidebar-ink-soft: #25304f;
+  --ivory: #f4f0e7;
+  --ink: #17213b;
+  --amber: #f6b849;
+  --coral: #ef705b;
+  --sage: #b9c6ae;
+  --line: rgba(23, 33, 59, 0.12);
+}
+
+.dark {
+  --background: 224 31% 15%;
+  --foreground: 42 35% 93%;
+  --card: 224 35% 19%;
+  --card-foreground: 42 35% 93%;
+  --border: 224 21% 29%;
+  --input: 224 21% 29%;
+  --muted: 224 24% 24%;
+  --muted-foreground: 40 16% 70%;
+  --primary: 37 91% 57%;
+  --primary-foreground: 224 31% 15%;
+  --secondary: 224 24% 24%;
+  --secondary-foreground: 42 35% 93%;
+  --accent: 37 91% 57%;
+  --accent-foreground: 224 31% 15%;
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { background: var(--ivory); }
+  body {
+    @apply font-sans antialiased;
+    background: var(--ivory);
+    color: var(--ink);
+    margin: 0;
+  }
+  button, input, textarea, select { font: inherit; }
+  button { cursor: pointer; }
+}
+
+@keyframes studio-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes studio-pulse {
+  0%, 100% { opacity: .45; transform: scale(.92); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes studio-scan {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(420%); }
+}
+
+.studio-rise { animation: studio-rise .55s cubic-bezier(.22, 1, .36, 1) both; }
+.studio-rise-delay-1 { animation-delay: .08s; }
+.studio-rise-delay-2 { animation-delay: .16s; }
+.studio-rise-delay-3 { animation-delay: .24s; }
+.studio-pulse { animation: studio-pulse 1.8s ease-in-out infinite; }
+.studio-scan { animation: studio-scan 1.6s ease-in-out infinite; }
+.mono { font-family: var(--app-font-mono); }
+.hairline { border-color: var(--line); }
+
+.control-shell {
+  background:
+    radial-gradient(circle at 74% -10%, rgba(246,184,73,.09), transparent 29rem),
+    var(--ivory);
+}
+
+.cinema-grid {
+  background-image:
+    linear-gradient(rgba(246,184,73,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246,184,73,.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.preview-film {
+  background:
+    linear-gradient(135deg, rgba(14,22,45,.92), rgba(35,46,78,.86)),
+    repeating-linear-gradient(115deg, rgba(246,184,73,.18) 0 1px, transparent 1px 14px);
+}
+
+.scene-shimmer {
+  background: linear-gradient(100deg, transparent 15%, rgba(255,255,255,.16) 50%, transparent 85%);
+  background-size: 220% 100%;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
