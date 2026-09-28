@@ -1,6 +1,6 @@
-# [Project name]
+# FRAME/15
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+FRAME/15 turns a text prompt into a 15-second storyboard and browser-rendered WebM clip.
 
 ## Run & Operate
 
@@ -22,23 +22,30 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/ai-video-studio` — the React/Vite studio UI and browser-side video export
+- `artifacts/api-server/src/routes/videos.ts` — prompt-to-storyboard generation API
+- `lib/api-spec/openapi.yaml` — source of truth for the video API contract
+- `lib/api-client-react` and `lib/api-zod` — generated API clients and validation types
+- `artifacts/ai-video-studio/.replit-artifact/artifact.toml` — preview and deployment routing
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The first build uses a prompt-driven local scene planner so the product works without a provider key; the API shape can accept a hosted model later.
+- Video export happens in the browser with Canvas capture and MediaRecorder, producing a real 15-second WebM instead of a static preview.
+- Generated projects are held in the API process for this MVP; the contract is separated so persistence can move to PostgreSQL without changing the UI.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+Users can enter a director's prompt, choose frame and visual direction, generate a three-scene 15-second project, preview it, browse recent creations, copy/share the prompt, and export a WebM clip.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+No additional preferences recorded.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Download requires a browser with Canvas capture and MediaRecorder support, such as current Chrome or Edge.
+- The API's in-memory project list resets when the API workflow restarts.
 
 ## Pointers
 
